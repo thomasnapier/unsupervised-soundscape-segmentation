@@ -1,4 +1,4 @@
-# Reproducibility materials for: An Efficient Pipeline for the Unsupervised Segmentation of Heterogeneous Natural Soundscapes
+# An Efficient Pipeline for the Unsupervised Segmentation of Heterogeneous Natural Soundscapes
 
 ## Overview
 This repository contains the code, processed data, and documentation required to reproduce the analyses, tables, and figures reported in the manuscript.
