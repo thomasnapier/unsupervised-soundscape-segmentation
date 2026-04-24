@@ -52,7 +52,7 @@ The pipeline integrates:
 
 Six ecoacoustic datasets are used:
 Duval, Mourachan, Rinyirru, Tarcutta, Undara, Wambiana.
-
+```
 data/annotations/
 ├── DUVAL-DRYA-20210419T000000+1000_REC_annotations.csv
 ├── MOURACHAN-WETA-20210509T000000+1000_REC_annotations.csv
@@ -60,7 +60,7 @@ data/annotations/
 ├── TARCUTTA-DRYA-20210430T100000+1000_REC_annotations.csv
 ├── UNDARA-DRYB-20210604T080000+1000_REC_annotations.csv
 └── WAMBIANA-WETBB.csv
-
+```
 Annotations are included and follow:
 Begin Time (s), End Time (s), Low Freq (Hz), High Freq (Hz), Label
 
