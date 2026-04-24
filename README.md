@@ -103,7 +103,7 @@ pip install -r requirements.txt
 
 Results are stored in:
 data/results/ and data/figures/
-
+```
 data/results/
 ├── clustering_results.csv
 ├── evaluation_metrics.csv
@@ -116,7 +116,7 @@ data/figures/
 ├── voronoi_plots/
 ├── metric_radar/
 └── runtime_curves/
-
+```
 ---
 
 ## Citation
