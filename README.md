@@ -46,7 +46,7 @@ The pipeline integrates:
 
 ## Data Availability
 
-[![DOI](https://img.shields.io/badge/DOI-10.5061%2Fdryad.0zpc8673p-blue)](https://doi.org/10.5061/dryad.0zpc8673p)
+[![DOI](https://img.shields.io/badge/DOI-10.55281%2Fzenodo.19757414-blue)](https://doi.org/10.5281/zenodo.19757414)
 
 The complete dataset used in this study is available at the link above. It includes audio segments, annotations, processed features, and experimental results required to reproduce all analyses.
 
