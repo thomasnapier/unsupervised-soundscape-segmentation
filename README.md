@@ -14,6 +14,8 @@ The pipeline integrates:
 - Clustering (HDBSCAN, DBSCAN, k-means, hierarchical clustering)  
 - Post-hoc validation using internal and ecological metrics  
 
+<p align="center"><img width=80% src="./data/figures/overall.png"></p>
+
 ---
 
 ## Repository Overview
