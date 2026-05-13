@@ -6,5 +6,4 @@ data/audio_datasets
 data/audio_datasets/uploads
 experiments_rerun.ipynb
 paper.ipynb
-folder.zip
 segmentation.ipynb
