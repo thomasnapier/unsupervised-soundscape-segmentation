@@ -1,0 +1,26 @@
+# Requirements for full_annotation_source_snapshot_reconstruction_notebook_checkpointed_v4_exact_recompute_no_substitution.ipynb
+# Recommended Python: 3.10 to 3.12 for best scientific-package compatibility.
+# The notebook can use sklearn.cluster.HDBSCAN, which requires scikit-learn >= 1.3.
+
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+scikit-learn>=1.3
+matplotlib>=3.8
+
+# Audio loading and MFCC feature extraction
+librosa>=0.10.1
+soundfile>=0.12.1
+audioread>=3.0.1
+
+# UMAP dimensionality reduction
+umap-learn>=0.5.5
+
+# Optional external HDBSCAN backend.
+# Keep installed if you use HDBSCAN_BACKEND = "external_hdbscan".
+# Not required if you only use HDBSCAN_BACKEND = "sklearn".
+hdbscan>=0.8.33
+
+# Notebook execution
+jupyter>=1.0
+ipykernel>=6.29
