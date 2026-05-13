@@ -145,7 +145,7 @@ python -m ipykernel install --user --name soundscape-reconstruction
 The most complete reconstruction notebook is:
 
 ```text
-full_annotation_source_snapshot_reconstruction_notebook_checkpointed_v4_exact_recompute_no_substitution.ipynb
+full_reconstruction_notebook.ipynb
 ```
 
 This notebook is designed to:
