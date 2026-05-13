@@ -157,10 +157,10 @@ This notebook is designed to:
 5. reuse processed feature snapshots only when audio reconstruction is not possible;
 6. run dimensionality reduction and clustering grid search;
 7. checkpoint clustering outputs so the kernel can be restarted without losing progress;
-8. regenerate Round 2-style internal results;
+8. regenerate internal results;
 9. regenerate boxplots, spider plots, and Voronoi plots;
 10. regenerate post-hoc GT/external validation tables;
-11. compare recomputed outputs against the original Round 2 and manuscript reference values;
+11. compare recomputed outputs against the original manuscript reference values;
 12. write all new outputs to the reconstruction directory without overwriting the original repository files.
 
 The notebook does **not** substitute original output files as final results. Original files are used only for snapshotting and mismatch auditing. Reconstructed outputs are generated separately.
@@ -213,7 +213,7 @@ Checkpointed stages include:
 - normalised feature generation;
 - dimensionality reduction embeddings;
 - per-dataset/per-embedding/per-method clustering checkpoints;
-- Round 2-style result files;
+- internal result files;
 - final audit tables and figures.
 
 For lower-memory systems, reduce the number of clustering jobs per run in the notebook, for example:
@@ -230,7 +230,7 @@ Then rerun the notebook repeatedly. It will continue from the next missing check
 
 The reconstruction notebook supports `sklearn.cluster.HDBSCAN` by default, matching the current project preference.
 
-However, older Round 2 outputs may have been produced with the external `hdbscan` package. Exact numerical reproduction can differ between HDBSCAN implementations. If strict historical matching is required and the external package is available, the notebook can be configured to use the external backend.
+However, older outputs may have been produced with the external `hdbscan` package. Exact numerical reproduction can differ between HDBSCAN implementations. If strict historical matching is required and the external package is available, the notebook can be configured to use the external backend.
 
 ---
 
