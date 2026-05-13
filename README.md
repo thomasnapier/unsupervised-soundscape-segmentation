@@ -20,6 +20,155 @@ The manuscript pipeline consists of:
 
 ---
 
+## Table of contents
+
+- [Easy-start guide for non-technical users](#easy-start-guide-for-non-technical-users)
+- [Repository status](#repository-status)
+- [Repository structure](#repository-structure)
+- [Data annotation files](#data-annotation-files)
+- [Installation](#installation)
+- [Main reconstruction notebook](#main-reconstruction-notebook)
+- [Running the reconstruction workflow](#running-the-reconstruction-workflow)
+- [Checkpointing and kernel stability](#checkpointing-and-kernel-stability)
+- [HDBSCAN backend](#hdbscan-backend)
+- [Validation logic](#validation-logic)
+  - [Internal validation](#internal-validation)
+  - [Post-hoc external validation](#post-hoc-external-validation)
+- [Figures](#figures)
+- [Known reproducibility notes](#known-reproducibility-notes)
+- [Data availability](#data-availability)
+- [Citation](#citation)
+- [Related software](#related-software)
+
+---
+
+## Easy-start guide for non-technical users
+
+This section is for users who want to open the project, inspect the supplied results, or run the reconstruction notebook without needing to understand every implementation detail.
+
+### What you can do with this repository
+
+You can use this repository in three ways:
+
+1. **View the supplied outputs**: open the figures and CSV files already included in `data/figures/`, `data/results/`, and `data/processed_features/`. This is the easiest option if you only want to inspect the paper outputs.
+2. **Run the reconstruction notebook**: regenerate features, embeddings, clustering outputs, validation tables, and figures into a new timestamped folder. This is the best option if you want to check reproducibility.
+3. **Audit differences**: compare regenerated outputs against the original snapshot files. This is useful if results differ because of package versions, random seeds, HDBSCAN backend differences, or unavailable local audio paths.
+
+### Step 1: Download the repository
+
+Download the repository as a ZIP file from GitHub, then extract it somewhere easy to find, for example:
+
+```text
+Documents/unsupervised-soundscape-segmentation/
+```
+
+The folder should contain files such as:
+
+```text
+README.md
+requirements.txt
+full_reconstruction_notebook.ipynb
+data/
+```
+
+### Step 2: Install Python
+
+Install **Python 3.10, 3.11, or 3.12**. These versions are recommended because scientific audio and machine learning packages are more reliable on them than on very new Python releases.
+
+### Step 3: Open a terminal in the repository folder
+
+On Windows, open the extracted repository folder, click the address bar, type `cmd`, and press Enter.
+
+On macOS or Linux, open Terminal and move into the repository folder, for example:
+
+```bash
+cd Documents/unsupervised-soundscape-segmentation
+```
+
+### Step 4: Install the required packages
+
+Run:
+
+```bash
+pip install -r requirements.txt
+```
+
+If Jupyter is not already installed, also run:
+
+```bash
+pip install jupyterlab ipykernel
+```
+
+### Step 5: Start Jupyter
+
+Run:
+
+```bash
+jupyter lab
+```
+
+Your web browser should open JupyterLab. Open:
+
+```text
+full_reconstruction_notebook.ipynb
+```
+
+### Step 6: Run the notebook
+
+In JupyterLab, use:
+
+```text
+Run > Run All Cells
+```
+
+The notebook writes new files into a folder like:
+
+```text
+reconstruction_runs/reconstruction_YYYYMMDD_HHMMSS/
+```
+
+It does **not** overwrite the original repository files.
+
+### Step 7: Find the regenerated outputs
+
+After the notebook finishes, look inside:
+
+```text
+reconstruction_runs/reconstruction_YYYYMMDD_HHMMSS/reconstructed/
+```
+
+The most useful folders are:
+
+```text
+figures/                  regenerated plots
+internal_analysis/        internal validation summaries
+external_validation/      GT/post-hoc validation tables
+results_round2/           reconstructed Round 2-style result files
+```
+
+The `audit/` folder contains comparison files that help explain whether regenerated outputs match the supplied snapshot.
+
+### If the notebook stops or the kernel dies
+
+The clustering stage can be heavy. If the notebook stops, do not delete the reconstruction folder. Instead:
+
+1. copy the path of the latest `reconstruction_runs/reconstruction_.../` folder;
+2. reopen the notebook;
+3. set `RESUME_RUN_DIR` near the top of the notebook to that folder;
+4. run the notebook again.
+
+The notebook will reuse completed checkpoints rather than starting from the beginning. For lower-memory computers, reduce the number of clustering jobs per run in the notebook:
+
+```python
+MAX_CLUSTER_JOBS_PER_RUN = 10
+```
+
+Then rerun the notebook multiple times until all checkpoints are complete.
+
+### Important note about missing audio files
+
+The repository includes annotation files, processed feature files, result CSVs, and figures. It does **not** include the complete original Australian Acoustic Observatory audio archive. If an annotation file points to an audio path that is not available on your computer, the notebook logs the missing file and continues. It can still reconstruct or audit downstream outputs from the included processed feature and result snapshots.
+
 ---
 
 ## Repository status
@@ -33,6 +182,8 @@ It is important to distinguish between three types of files:
 3. **Reconstruction outputs**: regenerated outputs written to a timestamped reconstruction directory. These should not overwrite the original repository files.
 
 The repository does **not** bundle the complete original A2O raw audio archive. Where audio paths are available through the annotation files, the reconstruction notebooks can use those paths. Where local audio is unavailable, the workflow can still audit and reconstruct downstream artefacts from the included feature and result snapshots.
+
+## Repository structure
 
 The repository snapshot is organised approximately as follows:
 
