@@ -38,7 +38,7 @@ The manuscript workflow is:
 
 ## Quick start guide
 
-For most users, the easiest and safest way to inspect the analysis is to use the **existing-data figures and tables notebook**.
+For most users, the easiest and quickest way to inspect the analysis is to use the **existing-data figures and tables notebook**.
 
 Use this notebook when you want to:
 
