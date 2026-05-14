@@ -1,12 +1,12 @@
 # Efficient Unsupervised Segmentation of Heterogeneous Natural Soundscapes
 
-This repository contains the code, data resources, and experimental workflow used in the paper:
+This repository supports the paper:
 
 **“An Efficient Pipeline for the Unsupervised Segmentation of Heterogeneous Natural Soundscapes”**
 
-Passive Acoustic Monitoring (PAM) is rapidly generating large-scale ecoacoustic datasets, yet segmentation remains a key bottleneck due to overlapping biophony, geophony, and anthropophony. This repository provides an **unsupervised, data-driven framework** for organising complex soundscapes into acoustically coherent and ecologically interpretable units.
+It provides the data snapshots, result files, figures, and reconstruction notebooks used to inspect and reproduce the analysis. The study uses an unsupervised ecoacoustic workflow to organise heterogeneous soundscapes into acoustically coherent and ecologically interpretable units.
 
-The manuscript pipeline consists of:
+The manuscript workflow is:
 
 1. systematic sampling of long-duration recordings;
 2. sound event detection and segmentation into 4.5-second non-overlapping windows;
@@ -16,172 +16,155 @@ The manuscript pipeline consists of:
 6. internal validation using Silhouette, Calinski-Harabasz, Davies-Bouldin, Dunn, and Composite Score;
 7. post-hoc ecological validation using partially labelled annotation files.
 
-<p align="center"><img width=80% src="./data/figures/overall.png"></p>
+<p align="center"><img width="80%" src="./data/figures/overall.png"></p>
 
 ---
 
 ## Table of contents
 
-- [Easy-start guide for non-technical users](#easy-start-guide-for-non-technical-users)
-- [Repository status](#repository-status)
+- [Quick start: existing-data notebook](#quick-start-existing-data-notebook)
+- [Full reconstruction workflow](#full-reconstruction-workflow)
 - [Repository structure](#repository-structure)
-- [Data annotation files](#data-annotation-files)
+- [Data and annotation files](#data-and-annotation-files)
 - [Installation](#installation)
-- [Main reconstruction notebook](#main-reconstruction-notebook)
-- [Running the reconstruction workflow](#running-the-reconstruction-workflow)
-- [Checkpointing and kernel stability](#checkpointing-and-kernel-stability)
-- [HDBSCAN backend](#hdbscan-backend)
+- [Outputs and figures](#outputs-and-figures)
 - [Validation logic](#validation-logic)
-  - [Internal validation](#internal-validation)
-  - [Post-hoc external validation](#post-hoc-external-validation)
-- [Figures](#figures)
-- [Known reproducibility notes](#known-reproducibility-notes)
+- [Reproducibility notes](#reproducibility-notes)
 - [Data availability](#data-availability)
 - [Citation](#citation)
 - [Related software](#related-software)
 
 ---
 
-## Easy-start guide for non-technical users
+## Quick start: existing-data notebook
 
-This section is for users who want to open the project, inspect the supplied results, or run the reconstruction notebook without needing to understand every implementation detail.
+For most users, the easiest and safest way to inspect the analysis is to use the **existing-data figures and tables notebook**.
 
-### What you can do with this repository
+Use this notebook when you want to:
 
-You can use this repository in three ways:
+- view the manuscript-style tables and figures;
+- inspect the supplied Round 2 result files;
+- avoid rerunning the full clustering grid search;
+- avoid creating new output folders;
+- avoid overwriting repository files.
 
-1. **View the supplied outputs**: open the figures and CSV files already included in `data/figures/`, `data/results/`, and `data/processed_features/`. This is the easiest option if you only want to inspect the paper outputs.
-2. **Run the reconstruction notebook**: regenerate features, embeddings, clustering outputs, validation tables, and figures into a new timestamped folder. This is the best option if you want to check reproducibility.
-3. **Audit differences**: compare regenerated outputs against the original snapshot files. This is useful if results differ because of package versions, random seeds, HDBSCAN backend differences, or unavailable local audio paths.
-
-### Step 1: Download the repository
-
-Download the repository as a ZIP file from GitHub, then extract it somewhere easy to find, for example:
+Recommended notebook:
 
 ```text
-Documents/unsupervised-soundscape-segmentation/
+existing_data_figures_tables_print_only_notebook_v4_corrected.ipynb
 ```
 
-The folder should contain files such as:
+This notebook reads the existing repository data only and displays outputs inline in Jupyter. It does **not** save CSV files, PNG files, LaTeX files, or audit folders.
 
-```text
-README.md
-requirements.txt
-full_reconstruction_notebook.ipynb
-data/
-```
+It reconstructs or displays:
 
-### Step 2: Install Python
+- internal metric tables from the supplied Round 2 CSV files;
+- Figure 2-style boxplots for Silhouette, Calinski-Harabasz, Davies-Bouldin, Dunn, and Composite Score;
+- Figure 4-style UMAP spider/radar plots;
+- Table 2-style post-hoc external validation values;
+- Table 3-style best internal result values;
+- Figure 5-style Voronoi/site plots from the existing figure files or annotation coordinates, depending on availability.
 
-Install **Python 3.10, 3.11, or 3.12**. These versions are recommended because scientific audio and machine learning packages are more reliable on them than on very new Python releases.
+### Non-technical steps
 
-### Step 3: Open a terminal in the repository folder
-
-On Windows, open the extracted repository folder, click the address bar, type `cmd`, and press Enter.
-
-On macOS or Linux, open Terminal and move into the repository folder, for example:
-
-```bash
-cd Documents/unsupervised-soundscape-segmentation
-```
-
-### Step 4: Install the required packages
-
-Run:
+1. Download this repository from GitHub as a ZIP file.
+2. Extract the ZIP file somewhere easy to find.
+3. Install Python 3.10, 3.11, or 3.12.
+4. Open a terminal or command prompt in the repository folder.
+5. Install the requirements:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-If Jupyter is not already installed, also run:
-
-```bash
-pip install jupyterlab ipykernel
-```
-
-### Step 5: Start Jupyter
-
-Run:
+6. Start Jupyter:
 
 ```bash
 jupyter lab
 ```
 
-Your web browser should open JupyterLab. Open:
+7. Open the print-only notebook:
 
 ```text
-full_reconstruction_notebook.ipynb
+existing_data_figures_tables_print_only_notebook_v4_corrected.ipynb
 ```
 
-### Step 6: Run the notebook
-
-In JupyterLab, use:
+8. Select:
 
 ```text
 Run > Run All Cells
 ```
 
-The notebook writes new files into a folder like:
+The figures and tables will appear inside the notebook.
+
+---
+
+## Full reconstruction workflow
+
+The full reconstruction notebook is intended for users who want to regenerate intermediate artefacts, not just inspect the supplied results.
+
+Use the full reconstruction notebook when you want to:
+
+- derive or regenerate feature files where audio paths are available;
+- rerun dimensionality reduction;
+- rerun clustering and internal validation;
+- checkpoint long-running clustering jobs;
+- compare regenerated outputs against the supplied repository snapshot.
+
+Main full reconstruction notebook:
+
+```text
+full_reconstruction_notebook.ipynb
+```
+
+The full reconstruction workflow writes new outputs to a timestamped folder such as:
 
 ```text
 reconstruction_runs/reconstruction_YYYYMMDD_HHMMSS/
 ```
 
-It does **not** overwrite the original repository files.
+It should not overwrite original repository files.
 
-### Step 7: Find the regenerated outputs
-
-After the notebook finishes, look inside:
+A typical reconstruction folder contains:
 
 ```text
-reconstruction_runs/reconstruction_YYYYMMDD_HHMMSS/reconstructed/
+reconstruction_runs/reconstruction_YYYYMMDD_HHMMSS/
+├── source_original/
+├── originals_for_comparison/
+├── reconstructed/
+│   ├── audio_index/
+│   ├── processed_features/
+│   ├── processed_features_normalized/
+│   ├── embeddings/
+│   ├── grid_search_raw/
+│   │   └── checkpoints_by_embedding_method/
+│   ├── results_round2/
+│   ├── internal_analysis/
+│   ├── external_validation/
+│   └── figures/
+└── audit/
 ```
 
-The most useful folders are:
+### Resuming after a kernel crash
 
-```text
-figures/                  regenerated plots
-internal_analysis/        internal validation summaries
-external_validation/      GT/post-hoc validation tables
-results_round2/           reconstructed Round 2-style result files
-```
+The clustering stage can be computationally expensive. If the notebook stops or the Jupyter kernel dies:
 
-The `audit/` folder contains comparison files that help explain whether regenerated outputs match the supplied snapshot.
-
-### If the notebook stops or the kernel dies
-
-The clustering stage can be heavy. If the notebook stops, do not delete the reconstruction folder. Instead:
-
-1. copy the path of the latest `reconstruction_runs/reconstruction_.../` folder;
-2. reopen the notebook;
+1. keep the latest `reconstruction_runs/reconstruction_.../` folder;
+2. reopen the full reconstruction notebook;
 3. set `RESUME_RUN_DIR` near the top of the notebook to that folder;
-4. run the notebook again.
+4. rerun the notebook.
 
-The notebook will reuse completed checkpoints rather than starting from the beginning. For lower-memory computers, reduce the number of clustering jobs per run in the notebook:
+Completed feature files, embeddings, and clustering checkpoints will be reused.
+
+For lower-memory systems, reduce the number of clustering jobs per run:
 
 ```python
 MAX_CLUSTER_JOBS_PER_RUN = 10
 ```
 
-Then rerun the notebook multiple times until all checkpoints are complete.
-
-### Important note about missing audio files
-
-The repository includes annotation files, processed feature files, result CSVs, and figures. It does **not** include the complete original Australian Acoustic Observatory audio archive. If an annotation file points to an audio path that is not available on your computer, the notebook logs the missing file and continues. It can still reconstruct or audit downstream outputs from the included processed feature and result snapshots.
+Then rerun the notebook repeatedly until all checkpoints are complete.
 
 ---
-
-## Repository status
-
-This repository is a **reconstruction and reproducibility snapshot**. It contains the annotation files, processed 39-feature files, clustering result CSVs, manuscript figures, and notebooks used to reconstruct or audit the analysis outputs.
-
-It is important to distinguish between three types of files:
-
-1. **Source annotation files**: LEAVES-style annotation CSVs containing cluster labels, propagated labels, manual sampled labels, coordinates, and `sound_path` references.
-2. **Processed feature/result files**: 39-feature CSVs and clustering result files used for internal metric figures and tables.
-3. **Reconstruction outputs**: regenerated outputs written to a timestamped reconstruction directory. These should not overwrite the original repository files.
-
-The repository does **not** bundle the complete original A2O raw audio archive. Where audio paths are available through the annotation files, the reconstruction notebooks can use those paths. Where local audio is unavailable, the workflow can still audit and reconstruct downstream artefacts from the included feature and result snapshots.
 
 ## Repository structure
 
@@ -240,6 +223,7 @@ The repository snapshot is organised approximately as follows:
 │       ├── manifest.csv
 │       └── Zenodo_README.md
 │
+├── quick_reconstruction_notebook.ipynb
 ├── full_reconstruction_notebook.ipynb
 ├── requirements.txt
 ├── LICENSE
@@ -248,8 +232,7 @@ The repository snapshot is organised approximately as follows:
 
 ---
 
-## Data Annotation Files
-
+## Data and annotation files
 [![DOI](https://img.shields.io/badge/DOI-10.55281%2Fzenodo.19757414-blue)](https://doi.org/10.5281/zenodo.19757414)
 
 The complete dataset used in this study is available at the link above. It includes audio segments, annotations, processed features, and experimental results required to reproduce all analyses.
@@ -270,11 +253,13 @@ x, y, z, class, start_time, end_time, start_date, end_date, sound_path, sampled,
 
 Annotations were generated by the LEAVES tool: https://github.com/thomasnapier/LEAVES
 
+The repository does **not** bundle the complete original Australian Acoustic Observatory audio archive. If annotation files contain `sound_path` values that are valid on your machine, the full reconstruction notebook can use them. If not, it logs missing files and continues using the included processed feature and result snapshots where appropriate.
+
 ---
 
 ## Installation
 
-A Python environment from **Python 3.10 to 3.12** is recommended. Some scientific audio packages may not yet install reliably on newer Python versions.
+A Python environment from **Python 3.10 to 3.12** is recommended. Some scientific audio and machine learning packages may not install reliably on very new Python versions.
 
 Install dependencies with:
 
@@ -282,7 +267,7 @@ Install dependencies with:
 pip install -r requirements.txt
 ```
 
-If using Jupyter:
+For Jupyter:
 
 ```bash
 pip install jupyterlab ipykernel
@@ -291,97 +276,34 @@ python -m ipykernel install --user --name soundscape-reconstruction
 
 ---
 
-## Main reconstruction notebook
+## Outputs and figures
 
-The most complete reconstruction notebook is:
-
-```text
-full_reconstruction_notebook.ipynb
-```
-
-This notebook is designed to:
-
-1. create a timestamped reconstruction directory;
-2. copy the original repository snapshot into that directory for audit purposes;
-3. derive audio paths from annotation files where available;
-4. regenerate 39-feature files when local audio paths are valid;
-5. reuse processed feature snapshots only when audio reconstruction is not possible;
-6. run dimensionality reduction and clustering grid search;
-7. checkpoint clustering outputs so the kernel can be restarted without losing progress;
-8. regenerate internal results;
-9. regenerate boxplots, spider plots, and Voronoi plots;
-10. regenerate post-hoc GT/external validation tables;
-11. compare recomputed outputs against the original manuscript reference values;
-12. write all new outputs to the reconstruction directory without overwriting the original repository files.
-
-The notebook does **not** substitute original output files as final results. Original files are used only for snapshotting and mismatch auditing. Reconstructed outputs are generated separately.
-
----
-
-## Running the reconstruction workflow
-
-Open the reconstruction notebook and run from the top.
-
-By default, outputs are written to a timestamped folder such as:
+The repository contains the manuscript figures and supporting plots in:
 
 ```text
-reconstruction_runs/reconstruction_YYYYMMDD_HHMMSS/
+data/figures/
 ```
 
-A typical reconstructed output tree is:
+Key figures include:
 
 ```text
-reconstruction_runs/reconstruction_YYYYMMDD_HHMMSS/
-├── source_original/
-├── originals_for_comparison/
-├── reconstructed/
-│   ├── audio_index/
-│   ├── processed_features/
-│   ├── processed_features_normalized/
-│   ├── embeddings/
-│   ├── grid_search_raw/
-│   │   └── checkpoints_by_embedding_method/
-│   ├── results_round2/
-│   ├── internal_analysis/
-│   ├── external_validation/
-│   └── figures/
-└── audit/
+overall.png          pipeline overview
+SC.png               Silhouette boxplot
+CH.png               Calinski-Harabasz boxplot
+DB.png               Davies-Bouldin boxplot
+DI.png               Dunn boxplot
+CS.png               Composite Score boxplot
+spider-plots.png     UMAP method/site radar plots
+scalability.png      runtime/scalability plot
+Duval.png            Voronoi/site plot
+Mourachan.png
+Rinyirru.png
+Tarcutta.png
+Undara.png
+Wambiana.png
 ```
 
-To resume a failed or interrupted run, set `RESUME_RUN_DIR` near the top of the notebook to the existing reconstruction directory, then rerun. Completed feature files, embeddings, and clustering checkpoints are reused.
-
----
-
-## Checkpointing and kernel stability
-
-The clustering stage can be computationally expensive. The reconstruction notebook saves intermediate outputs so a failed kernel does not require a complete rerun.
-
-Checkpointed stages include:
-
-- source snapshot creation;
-- annotation-derived audio index;
-- feature generation;
-- normalised feature generation;
-- dimensionality reduction embeddings;
-- per-dataset/per-embedding/per-method clustering checkpoints;
-- internal result files;
-- final audit tables and figures.
-
-For lower-memory systems, reduce the number of clustering jobs per run in the notebook, for example:
-
-```python
-MAX_CLUSTER_JOBS_PER_RUN = 10
-```
-
-Then rerun the notebook repeatedly. It will continue from the next missing checkpoint.
-
----
-
-## HDBSCAN backend
-
-The reconstruction notebook supports `sklearn.cluster.HDBSCAN` by default, matching the current project preference.
-
-However, older outputs may have been produced with the external `hdbscan` package. Exact numerical reproduction can differ between HDBSCAN implementations. If strict historical matching is required and the external package is available, the notebook can be configured to use the external backend.
+The existing-data notebook displays figures and tables inline. The full reconstruction notebook writes regenerated outputs to a new timestamped reconstruction folder.
 
 ---
 
@@ -389,7 +311,7 @@ However, older outputs may have been produced with the external `hdbscan` packag
 
 ### Internal validation
 
-Internal validation is label-free. It evaluates the structure of the clusters using:
+Internal validation is label-free. It evaluates cluster structure using:
 
 - Silhouette Coefficient;
 - Calinski-Harabasz Index;
@@ -397,56 +319,31 @@ Internal validation is label-free. It evaluates the structure of the clusters us
 - Dunn Index;
 - Composite Score.
 
-The internal figures compare clustering algorithms and dimensionality reduction methods across normalised versions of these metrics.
+These metrics are used to compare clustering algorithms and dimensionality reduction methods across normalised scores.
 
 ### Post-hoc external validation
 
 External validation is post-hoc. Labels are **not** used to train embeddings, select clustering hyperparameters, or fit clustering models.
 
-The GT/external validation stage uses:
+The external validation stage uses:
 
-- the existing unsupervised cluster label column, usually `class`;
+- the unsupervised cluster label column, usually `class`;
 - the propagated ecological class label, usually `propagated_class`;
 - manually sampled rows, usually `sampled == True`, for MACPC and sound-type summaries where applicable.
 
-For Wambiana and Tarcutta, where source annotation or feature coverage may be incomplete in the reconstruction snapshot, the notebook preserves explicit fallback/reference handling rather than silently producing misleading values.
+For Wambiana and Tarcutta, local reconstruction may require explicit fallback/reference handling if corresponding source annotation or feature files are incomplete or absent.
 
 ---
 
-## Figures
+## Reproducibility notes
 
-The repository contains the main manuscript figures and supporting plots:
-
-```text
-data/figures/
-├── overall.png          # pipeline overview
-├── SC.png               # Silhouette boxplot
-├── CH.png               # Calinski-Harabasz boxplot
-├── DB.png               # Davies-Bouldin boxplot
-├── DI.png               # Dunn boxplot
-├── CS.png               # Composite Score boxplot
-├── spider-plots.png     # UMAP method/site radar plots
-├── scalability.png      # runtime/scalability plot
-├── Duval.png            # Voronoi/site plot
-├── Mourachan.png
-├── Rinyirru.png
-├── Tarcutta.png
-├── Undara.png
-└── Wambiana.png
-```
-
-The reconstruction notebook regenerates corresponding figures inside the reconstruction run directory rather than overwriting these originals.
-
----
-
-## Known reproducibility notes
-
-- The repository snapshot contains processed features and result CSVs, but does not bundle the full raw A2O audio archive.
-- Annotation files may contain `sound_path` values that point to files on the original machine or a previous data layout. The reconstruction notebook logs missing files and continues rather than stopping the entire run.
-- Stochastic components such as t-SNE, UMAP, and clustering can vary unless random seeds, package versions, and backends match the original environment.
+- The easiest reproducibility path is the existing-data print-only notebook.
+- The full reconstruction path is slower and may require multiple resumed runs.
+- The repository contains processed feature and result snapshots, but not the full original A2O raw audio archive.
+- Annotation `sound_path` values may refer to paths from the original machine or prior data layout.
+- t-SNE, UMAP, and clustering can vary unless package versions, random seeds, and backends match the original environment.
 - HDBSCAN results may differ between `sklearn.cluster.HDBSCAN` and the external `hdbscan` package.
-- Reconstructed outputs are written to a new timestamped directory. Original repository files should not be overwritten.
-- Some manuscript values, especially GT/external values for Wambiana and Tarcutta, may require explicit reference/fallback handling when the corresponding source files are incomplete or absent in the local snapshot.
+- Reconstructed outputs should be written to timestamped reconstruction directories, not over the repository originals.
 
 ---
 
@@ -464,7 +361,7 @@ The original raw audio recordings are publicly available from the Australian Aco
 https://data.acousticobservatory.org/
 ```
 
-A Zenodo/Dryad-style dataset snapshot may be used alongside this repository when distributing processed features, annotations, figures, and reconstruction manifests. Update the DOI below if the archival record changes:
+Dataset snapshot:
 
 ```text
 https://doi.org/10.5281/zenodo.19757414
@@ -473,8 +370,6 @@ https://doi.org/10.5281/zenodo.19757414
 ---
 
 ## Citation
-
-If citing the manuscript, update this entry with the final publication details:
 
 ```bibtex
 @article{Napier2026UnsupervisedSegmentation,
