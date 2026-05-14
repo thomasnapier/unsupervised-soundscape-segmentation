@@ -43,7 +43,7 @@ For most users, the easiest and safest way to inspect the analysis is to use the
 Use this notebook when you want to:
 
 - view the manuscript-style tables and figures;
-- inspect the supplied Round 2 result files;
+- inspect the supplied result files;
 - avoid rerunning the full clustering grid search;
 - avoid creating new output folders;
 - avoid overwriting repository files.
@@ -51,7 +51,7 @@ Use this notebook when you want to:
 Recommended notebook:
 
 ```text
-existing_data_figures_tables_print_only_notebook_v4_corrected.ipynb
+quick_reconstruction_notebook.ipynb
 ```
 
 This notebook reads the existing repository data only and displays outputs inline in Jupyter. It does **not** save CSV files, PNG files, LaTeX files, or audit folders.
@@ -86,7 +86,7 @@ jupyter lab
 7. Open the print-only notebook:
 
 ```text
-existing_data_figures_tables_print_only_notebook_v4_corrected.ipynb
+quick_reconstruction_notebook.ipynb
 ```
 
 8. Select:
