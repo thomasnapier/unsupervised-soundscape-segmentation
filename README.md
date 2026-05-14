@@ -22,7 +22,7 @@ The manuscript workflow is:
 
 ## Table of contents
 
-- [Quick start: existing-data notebook](#quick-start-existing-data-notebook)
+- [Quick start guide](#quick-start-existing-data-notebook)
 - [Full reconstruction workflow](#full-reconstruction-workflow)
 - [Repository structure](#repository-structure)
 - [Data and annotation files](#data-and-annotation-files)
@@ -36,7 +36,7 @@ The manuscript workflow is:
 
 ---
 
-## Quick start: existing-data notebook
+## Quick start guide
 
 For most users, the easiest and safest way to inspect the analysis is to use the **existing-data figures and tables notebook**.
 
