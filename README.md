@@ -22,7 +22,7 @@ The manuscript workflow is:
 
 ## Table of contents
 
-- [Quick start guide](#quick-start-existing-data-notebook)
+- [Quick start guide](#quick-start-guide)
 - [Full reconstruction workflow](#full-reconstruction-workflow)
 - [Repository structure](#repository-structure)
 - [Data and annotation files](#data-and-annotation-files)
