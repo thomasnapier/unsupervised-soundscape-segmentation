@@ -372,11 +372,13 @@ https://doi.org/10.5281/zenodo.19757414
 ## Citation
 
 ```bibtex
-@article{Napier2026UnsupervisedSegmentation,
-  author  = {Napier, Thomas James and others},
-  title   = {An Efficient Pipeline for the Unsupervised Segmentation of Heterogeneous Natural Soundscapes},
-  year    = {2026},
-  note    = {Manuscript under review / preprint details to be updated}
+@article{napier2026efficient,
+  title={An efficient pipeline for the unsupervised segmentation of heterogeneous natural soundscapes},
+  author={Napier, Thomas and Ahn, Euijoon and Allen-Ankins, Slade and Schwarzkopf, Lin and Lee, Ickjai},
+  journal={Ecological Informatics},
+  pages={103956},
+  year={2026},
+  publisher={Elsevier}
 }
 ```
 
